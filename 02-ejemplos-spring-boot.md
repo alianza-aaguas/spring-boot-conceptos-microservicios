@@ -1,8 +1,29 @@
-# 💻 Ejemplos Prácticos de Spring Boot y Microservicios
-### Todos los conceptos "en acción", explicados línea por línea (con el concepto literal de programación en cada ejemplo)
+# 💻 2. Ejemplos Prácticos de Spring Boot y Microservicios
+### Todos los conceptos "en acción", explicados línea por línea
 
 > 📘 Este documento es la **continuación** de `01-conceptos-spring-boot.md`.
-> Aquí veremos, con **código real y comentado**, cada uno de los conceptos que aprendiste, y en cada sección se incluye primero el **concepto literal en programación** antes de la explicación sencilla.
+> Aquí veremos, con **código real y comentado**, cada uno de los conceptos que aprendiste.
+
+---
+
+## 📑 Índice
+
+1. [El proyecto que vamos a construir](#🏗️-el-proyecto-que-vamos-a-construir)
+2. [Estructura del proyecto](#📂-estructura-del-proyecto-cómo-se-organizan-los-archivos)
+3. [El "botón de encendido": TiendaApplication.java](#1️⃣-el-botón-de-encendido-tiendaapplicationjava)
+4. [El "molde" del producto: Producto.java](#2️⃣-el-molde-del-producto-productojava)
+5. [El "bodeguero": ProductoRepository.java](#3️⃣-el-bodeguero-productorepositoryjava)
+6. [El "contrato" (interfaz): ProductoService.java](#4️⃣-el-contrato-interfaz-productoservicejava)
+7. [El "cocinero" (implementación): ProductoServiceImpl.java](#5️⃣-el-cocinero-implementación-productoserviceimpljava)
+8. [Las "alarmas" personalizadas (excepciones)](#6️⃣-las-alarmas-personalizadas-excepciones)
+9. [El "911 central": ManejadorGlobalDeErrores.java](#7️⃣-el-911-central-manejadorglobaldeErroresjava)
+10. [El "mesero": ProductoController.java](#8️⃣-el-mesero-productocontrollerjava)
+11. [Archivo de "ingredientes": pom.xml](#9️⃣-archivo-de-ingredientes-pomxml)
+12. [Probando el microservicio](#🧪-probando-el-microservicio)
+13. [Cómo se conecta todo](#🔗-cómo-se-conecta-todo-flujo-completo)
+14. [Resumen de qué se usó](#🎯-resumen-de-qué-se-usó-dónde-y-su-concepto-literal)
+15. [Qué aprendiste](#🚀-¿qué-aprendiste)
+16. [Siguientes pasos](#🌟-siguientes-pasos-si-quieres-seguir-aprendiendo)
 
 ---
 
@@ -54,7 +75,7 @@ tiendra-microservicio/
 
 ## 1️⃣ El "botón de encendido": `TiendaApplication.java`
 
-**Concepto literal en programación:** La clase anotada con `@SpringBootApplication` es el punto de entrada de la aplicación (entry point); combina `@Configuration`, `@EnableAutoConfiguration` y `@ComponentScan` para iniciar el contenedor de Spring Boot.
+**Concepto literal en programación:** La clase anotada con `@SpringBootApplication` es el punto de entrada de la aplicación (entry point); combina `@Configuration`, `@EnableAutoConfiguration` y `@ComponentScan`.
 
 **Explicación sencilla:** Es como el botón de encendido de un televisor. Sin él, nada prende.
 
@@ -391,7 +412,7 @@ public class ManejadorGlobalDeErrores {
 
 ## 8️⃣ El "mesero": `ProductoController.java`
 
-**Concepto literal en programación:** Un controlador REST anotado con `@RestController` expone endpoints HTTP mediante anotaciones de mapeo (`@GetMapping`, `@PostMapping`, `@DeleteMapping`) y devuelve datos al cliente.
+**Concepto literal en programación:** Un controlador REST anotado con `@RestController` expone endpoints HTTP mediante anotaciones de mapeo (`@GetMapping`, `@PostMapping`, `@DeleteMapping`) y devuelve respuestas automáticamente serializadas a JSON.
 
 **Explicación sencilla:** Es el mesero 🧑‍💼. Recibe pedidos del cliente, se los pasa al cocinero y trae la respuesta.
 
@@ -452,7 +473,7 @@ public class ProductoController {
 
 ## 9️⃣ Archivo de "ingredientes": `pom.xml`
 
-**Concepto literal en programación:** El `pom.xml` es el archivo de configuración de Maven que declara dependencias, plugins y metadata del proyecto Java, gestionando la construcción y empaquetado de la aplicación.
+**Concepto literal en programación:** El `pom.xml` es el archivo de configuración de Maven que declara dependencias, plugins y metadata del proyecto Java, gestionando la construcción y empaquetamiento.
 
 **Explicación sencilla:** Es la lista de mercado 🛒. Le dice al programa qué ingredientes (librerías) necesita descargar.
 
@@ -610,12 +631,12 @@ Content-Type: application/json
 |---|---|---|
 | **Spring Boot arranque** | Punto de entrada que inicia el contenedor de Spring Boot | `@SpringBootApplication` en `TiendaApplication` |
 | **Microservicio REST** | Arquitectura de servicios independientes comunicados por HTTP | Todo el proyecto expone endpoints HTTP |
-| **Anotaciones** | Metadata declarativa procesada por el framework en tiempo de ejecución | `@RestController`, `@Service`, `@Repository`, `@RequestMapping`, `@GetMapping`, etc. |
+| **Anotaciones** | Metadata declarativa procesada por el framework en tiempo de ejecución | `@RestController`, `@Service`, `@Repository`, `@RequestMapping`, etc. |
 | **Interfaz (contrato)** | Conjunto de métodos abstractos que definen un contrato | `ProductoService` |
 | **Implementación** | Clase concreta que cumple el contrato de una interfaz | `ProductoServiceImpl implements ProductoService` |
 | **Inyección de dependencias** | Patrón de diseño donde el contenedor provee las dependencias | Constructor en Service y Controller |
 | **Excepciones personalizadas** | Clases que extienden `RuntimeException`/`Exception` para errores de dominio | `ProductoNoEncontradoException`, `SaldoInsuficienteException` |
-| **Códigos HTTP personalizados** | Mapeo de excepciones/respuestas a códigos de estado HTTP específicos | `@ResponseStatus(HttpStatus.NOT_FOUND)`, `@ResponseStatus(HttpStatus.CREATED)`, etc. |
+| **Códigos HTTP personalizados** | Mapeo de excepciones/respuestas a códigos de estado HTTP específicos | `@ResponseStatus(HttpStatus.NOT_FOUND)`, etc. |
 | **Manejo global de errores** | Interceptación centralizada de excepciones | `@ControllerAdvice` + `@ExceptionHandler` |
 
 ---
@@ -643,6 +664,19 @@ Con estos ejemplos ya viste en código real cómo:
 - Documentar la API con Swagger / OpenAPI.
 - Comunicar varios microservicios entre sí con Feign Client o RestTemplate.
 - Desplegar el microservicio en Docker y Kubernetes.
+
+---
+
+## 🔗 Navegación de la serie
+
+| Archivo | Contenido |
+|---------|----------|
+| [01-conceptos-spring-boot.md](./01-conceptos-spring-boot.md) | 📚 Conceptos de Spring Boot y microservicios |
+| **02-ejemplos-spring-boot.md** | 💻 Ejemplos prácticos de Spring Boot |
+| [03-conceptos-java-poo-ciclos-colecciones.md](./03-conceptos-java-poo-ciclos-colecciones.md) | 🧠 Conceptos de Java: POO, ciclos y colecciones |
+| [04-ejemplos-java-poo-ciclos-colecciones.md](./04-ejemplos-java-poo-ciclos-colecciones.md) | 💻 Ejemplos de Java: POO, ciclos y colecciones |
+| [05-conceptos-java-funcional-errores-maps.md](./05-conceptos-java-funcional-errores-maps.md) | 🎯 Conceptos de Java: programación funcional y Map |
+| [06-ejemplos-java-funcional-errores-maps.md](./06-ejemplos-java-funcional-errores-maps.md) | 💻 Ejemplos de Java: programación funcional y Map |
 
 ---
 
