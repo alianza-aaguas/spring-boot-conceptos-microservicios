@@ -1,6 +1,12 @@
-# 6. Ejemplos de Java: programación funcional, errores y Map
+# 💻 6. Ejemplos de Java: Programación Funcional, Errores y Map
+### Código práctico línea por línea
 
-## Índice
+> 📘 Este documento es la **continuación práctica** de `05-conceptos-java-funcional-errores-maps.md`.
+> Aquí veremos código real con explicaciones detalladas de cada concepto funcional.
+
+---
+
+## 📑 Índice
 
 1. [Lambdas e interfaces funcionales](#61-lambdas-e-interfaces-funcionales)
 2. [Predicate, Function, Consumer y Supplier](#62-predicate-function-consumer-y-supplier)
@@ -9,6 +15,7 @@
 5. [Map avanzado](#65-map-avanzado)
 6. [Try, catch y finally en casos reales](#66-try-catch-y-finally-en-casos-reales)
 7. [Resumen final](#67-resumen-final)
+8. [Navegación](#🔗-navegación-de-la-serie)
 
 ---
 
@@ -262,4 +269,31 @@ La programación funcional, `Map` avanzado y el manejo de errores completan una 
 - Usa `Map` cuando necesites búsquedas por clave.
 - Usa `try/catch/finally` para operaciones con riesgo real.
 
-[Volver al archivo conceptual](./05-conceptos-java-funcional-errores-maps.md)
+---
+
+## 🔗 Navegación de la serie
+
+| Archivo | Contenido |
+|---------|----------|
+| [01-conceptos-spring-boot.md](./01-conceptos-spring-boot.md) | 📚 Conceptos de Spring Boot y microservicios |
+| [02-ejemplos-spring-boot.md](./02-ejemplos-spring-boot.md) | 💻 Ejemplos prácticos de Spring Boot |
+| [03-conceptos-java-poo-ciclos-colecciones.md](./03-conceptos-java-poo-ciclos-colecciones.md) | 🧠 Conceptos de Java: POO, ciclos y colecciones |
+| [04-ejemplos-java-poo-ciclos-colecciones.md](./04-ejemplos-java-poo-ciclos-colecciones.md) | 💻 Ejemplos de Java: POO, ciclos y colecciones |
+| [05-conceptos-java-funcional-errores-maps.md](./05-conceptos-java-funcional-errores-maps.md) | 🎯 Conceptos de Java: programación funcional y Map |
+| **06-ejemplos-java-funcional-errores-maps.md** | 💻 Ejemplos de Java: programación funcional y Map |
+
+---
+
+## 🎓 ¿Qué sigue ahora?
+
+¡Felicidades! 🎉 Ya tienes una base sólida de Java y Spring Boot. 
+
+Desde aquí, puedes:
+- ✅ Crear aplicaciones Spring Boot reales.
+- ✅ Conectar a bases de datos con JPA/Hibernate.
+- ✅ Agregar seguridad con Spring Security.
+- ✅ Documentar APIs con Swagger.
+- ✅ Desplegar en Docker y Kubernetes.
+- ✅ Explorar testing con JUnit y Mockito.
+
+**¡Sigue aprendiendo y construyendo cosas increíbles!** 🚀
