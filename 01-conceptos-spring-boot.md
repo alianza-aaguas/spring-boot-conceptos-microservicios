@@ -1,5 +1,22 @@
-# 🌱 Conceptos Profundos de Spring Boot y Microservicios
+# 🌱 1. Conceptos Profundos de Spring Boot y Microservicios
 ### Explicado para personas que **no saben programar**
+
+---
+
+## 📑 Índice
+
+1. [Introducción](#🧭-introducción-qué-es-programar-un-servicio-web)
+2. [¿Qué es Java y qué es Spring Boot?](#1-☕-¿qué-es-java-y-qué-es-spring-boot)
+3. [¿Qué es un Microservicio?](#2-🧩-¿qué-es-un-microservicio)
+4. [¿Qué es HTTP y los códigos que se lanzan?](#3-📮-¿qué-es-http-y-los-códigos-que-se-lanzan)
+5. [¿Qué es una Anotación?](#4-🏷️-¿qué-es-una-anotación-annotation)
+6. [¿Qué es una Interfaz?](#5-🔌-¿qué-es-una-interfaz-interface)
+7. [¿Qué es la Inyección de Dependencias?](#6-💉-¿qué-es-la-inyección-de-dependencias-di)
+8. [Manejo de Excepciones](#7-🚨-manejo-de-excepciones)
+9. [Excepciones Personalizadas](#8-🎨-excepciones-personalizadas)
+10. [Lanzar Códigos HTTP Personalizados](#9-🌐-lanzar-códigos-http-personalizados)
+11. [Resumen mental](#10-🧠-resumen-mental-para-no-perderte)
+12. [Conclusión](#✅-con-esto-ya-entiendes)
 
 ---
 
@@ -26,14 +43,14 @@ Programar un servicio web significa escribir las instrucciones para que esa "coc
 ### Java
 **Concepto literal en programación:** Java es un lenguaje de programación orientado a objetos, compilado a bytecode que se ejecuta sobre la Máquina Virtual de Java (JVM).
 
-**Explicación sencilla:** Java es un idioma que usamos para hablarle a la computadora. Así como el español sirve para que dos personas se entiendan, Java sirve para que un programador y una máquina se comuniquen con reglas claras.
+**Explicación sencilla:** Java es un idioma que usamos para hablarle a la computadora. Así como el español sirve para que dos personas se entiendan, Java sirve para que un programador y una máquina se entiendan.
 
 **Idea importante:** Java no solo es un lenguaje; también tiene una plataforma de ejecución muy usada en empresas.
 
 ### Spring Boot
-**Concepto literal en programación:** Spring Boot es un framework de Java basado en Spring que permite crear aplicaciones autónomas y listas para producción con configuración mínima, usando convención sobre configuración y auto-configuración.
+**Concepto literal en programación:** Spring Boot es un framework de Java basado en Spring que permite crear aplicaciones autónomas y listas para producción con configuración mínima, usando convenciones y embebiendo un servidor web.
 
-**Explicación sencilla:** Imagina que quieres construir una casa. Podrías fabricar cada ladrillo y cada puerta desde cero, o podrías usar una base ya preparada que te ahorra muchísimo trabajo. Spring Boot hace eso en Java: te da una base lista para crear aplicaciones más rápido.
+**Explicación sencilla:** Imagina que quieres construir una casa. Podrías fabricar cada ladrillo y cada puerta desde cero, o podrías usar una base ya preparada que te ahorra muchísimo trabajo. Spring Boot es eso: una base preparada.
 
 👉 **Spring Boot es una base preparada para construir aplicaciones web en Java.**
 
@@ -47,7 +64,7 @@ Programar un servicio web significa escribir las instrucciones para que esa "coc
 
 ## 2. 🧩 ¿Qué es un Microservicio?
 
-**Concepto literal en programación:** Un microservicio es un estilo arquitectónico donde una aplicación se estructura como un conjunto de servicios pequeños, independientes, desplegables por separado y enfocados en una responsabilidad de negocio concreta.
+**Concepto literal en programación:** Un microservicio es un estilo arquitectónico donde una aplicación se estructura como un conjunto de servicios pequeños, independientes, desplegables por separado y altamente desacoplados.
 
 **Explicación sencilla:** Piensa en un **centro comercial**:
 - Hay una tienda de ropa.
@@ -66,7 +83,7 @@ Cada tienda funciona por su cuenta, tiene su propio personal y sus propias regla
 | Si falla una parte, puede caer todo | Si falla uno, los demás pueden seguir |
 | Más simple de iniciar | Más compleja de operar |
 
-**Importante:** microservicios no significa “más fácil siempre”; significa “más flexible, pero también más complejo de gestionar”.
+**Importante:** microservicios no significa "más fácil siempre"; significa "más flexible, pero también más complejo de gestionar".
 
 ---
 
@@ -74,7 +91,7 @@ Cada tienda funciona por su cuenta, tiene su propio personal y sus propias regla
 
 **Concepto literal en programación:** HTTP (HyperText Transfer Protocol) es el protocolo de comunicación cliente-servidor sobre el cual se intercambian mensajes en la web, usando métodos como GET, POST, PUT, PATCH y DELETE.
 
-**Explicación sencilla:** HTTP es el lenguaje de intercambio de mensajes en internet. Cuando pides algo, envías una petición, y cuando el servidor responde, te devuelve un mensaje con información y un código que indica qué pasó.
+**Explicación sencilla:** HTTP es el lenguaje de intercambio de mensajes en internet. Cuando pides algo, envías una petición, y cuando el servidor responde, te devuelve un mensaje con información y un número.
 
 ### Ciclo básico request/response
 ```text
@@ -108,7 +125,7 @@ Cliente <- Respuesta HTTP <- Servidor
 
 ## 4. 🏷️ ¿Qué es una Anotación (Annotation)?
 
-**Concepto literal en programación:** Una anotación es una forma de metadata que se añade al código fuente para proporcionar información al compilador o al framework en tiempo de ejecución, sin cambiar directamente la lógica del programa.
+**Concepto literal en programación:** Una anotación es una forma de metadata que se añade al código fuente para proporcionar información al compilador o al framework en tiempo de ejecución, sin afectar directamente la lógica del código.
 
 **Explicación sencilla:** Imagina que organizas cajas y les pegas etiquetas de colores:
 - Roja = frágil
@@ -117,7 +134,7 @@ Cliente <- Respuesta HTTP <- Servidor
 
 Las etiquetas no cambian el contenido de la caja, pero le dicen a los demás cómo tratarla.
 
-👉 En Spring Boot, una anotación es como una etiqueta que le dice al framework: “trata este código de una manera especial”.
+👉 En Spring Boot, una anotación es como una etiqueta que le dice al framework: "trata este código de una manera especial".
 
 ### Ejemplos comunes de anotaciones en Spring Boot
 - `@RestController` → indica que la clase responde a peticiones web.
@@ -147,7 +164,7 @@ Para poder cambiar la implementación sin cambiar el código que la usa.
 
 ## 6. 💉 ¿Qué es la Inyección de Dependencias (DI)?
 
-**Concepto literal en programación:** La Inyección de Dependencias es un patrón de diseño en el que un objeto recibe las dependencias que necesita desde el exterior, normalmente a través de un contenedor que las crea y administra.
+**Concepto literal en programación:** La Inyección de Dependencias es un patrón de diseño en el que un objeto recibe las dependencias que necesita desde el exterior, normalmente a través de un constructor, setter o anotación.
 
 **Explicación sencilla:** Imagina que eres un chef y necesitas cuchillos para cocinar.
 
@@ -172,9 +189,9 @@ Un asistente te entrega los cuchillos listos para usar.
 
 ## 7. 🚨 Manejo de Excepciones
 
-**Concepto literal en programación:** Una excepción es un evento anómalo que ocurre durante la ejecución de un programa y que interrumpe el flujo normal de instrucciones. El manejo de excepciones permite responder a ese evento de forma controlada.
+**Concepto literal en programación:** Una excepción es un evento anómalo que ocurre durante la ejecución de un programa y que interrumpe el flujo normal de instrucciones. El manejo de excepciones es el mecanismo para capturar, procesar y recuperarse de esos errores.
 
-**Explicación sencilla:** Imagina que vas en carro y de repente se pincha una llanta o se acaba la gasolina. Son imprevistos. Si no tienes plan, te quedas varado. Si tienes un plan, puedes reaccionar mejor.
+**Explicación sencilla:** Imagina que vas en carro y de repente se pincha una llanta o se acaba la gasolina. Son imprevistos. Si no tienes plan, te quedas varado. Si tienes un plan, puedes reaccionar.
 
 👉 Manejar excepciones es tener un plan B cuando algo sale mal.
 
@@ -190,9 +207,9 @@ No todas las excepciones significan lo mismo. Algunas son errores de validación
 
 ## 8. 🎨 Excepciones Personalizadas
 
-**Concepto literal en programación:** Una excepción personalizada es una clase creada por el desarrollador que extiende de `Exception` o `RuntimeException`, permitiendo representar errores específicos del dominio o del negocio.
+**Concepto literal en programación:** Una excepción personalizada es una clase creada por el desarrollador que extiende de `Exception` o `RuntimeException`, permitiendo representar errores específicos del dominio de negocio.
 
-**Explicación sencilla:** Java trae alarmas generales como “algo salió mal”, pero eso es muy vago. Es mejor tener alarmas específicas para saber exactamente qué pasó.
+**Explicación sencilla:** Java trae alarmas generales como "algo salió mal", pero eso es muy vago. Es mejor tener alarmas específicas para saber exactamente qué pasó.
 
 👉 Las excepciones personalizadas sirven para representar errores de negocio con nombres claros:
 - `ProductoNoEncontradoException`
@@ -217,7 +234,7 @@ Ejemplo:
 - Si los datos no son válidos → `400 Bad Request` o `422 Unprocessable Entity`.
 - Si no hay stock → `409 Conflict` o un código de negocio definido por el equipo.
 
-👉 Es como decirle al mesero: “si no hay el plato, no te calles; responde con educación y claridad”.
+👉 Es como decirle al mesero: "si no hay el plato, no te calles; responde con educación y claridad".
 
 **Importante:** en arquitectura real, elegir el código correcto ayuda a que el cliente entienda qué pasó y pueda reaccionar mejor.
 
@@ -250,4 +267,17 @@ Ejemplo:
 
 ---
 
-**👉 Próximo documento:** ejemplos de código reales, comentados línea por línea, para ver todos estos conceptos en acción.
+## 🔗 Navegación de la serie
+
+| Archivo | Contenido |
+|---------|----------|
+| **01-conceptos-spring-boot.md** | 📚 Conceptos de Spring Boot y microservicios |
+| [02-ejemplos-spring-boot.md](./02-ejemplos-spring-boot.md) | 💻 Ejemplos prácticos de Spring Boot |
+| [03-conceptos-java-poo-ciclos-colecciones.md](./03-conceptos-java-poo-ciclos-colecciones.md) | 🧠 Conceptos de Java: POO, ciclos y colecciones |
+| [04-ejemplos-java-poo-ciclos-colecciones.md](./04-ejemplos-java-poo-ciclos-colecciones.md) | 💻 Ejemplos de Java: POO, ciclos y colecciones |
+| [05-conceptos-java-funcional-errores-maps.md](./05-conceptos-java-funcional-errores-maps.md) | 🎯 Conceptos de Java: programación funcional y Map |
+| [06-ejemplos-java-funcional-errores-maps.md](./06-ejemplos-java-funcional-errores-maps.md) | 💻 Ejemplos de Java: programación funcional y Map |
+
+---
+
+**👉 Próximo documento:** [ejemplos de código reales, comentados línea por línea](./02-ejemplos-spring-boot.md)
