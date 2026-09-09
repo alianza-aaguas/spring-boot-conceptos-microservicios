@@ -1,6 +1,9 @@
 # 🎯 5. Conceptos de Java: Programación Funcional, Errores y Map
 ### Explicado para personas que **no saben programar**
 
+> 📘 Este documento es la continuación de `04-ejemplos-java-poo-ciclos-colecciones.md`.
+> Aquí nos adentramos en un paradigma diferente: **la programación funcional**.
+
 ---
 
 ## 🧭 Introducción: ¿Qué es "funcional" en programación?
@@ -17,18 +20,19 @@ Imagina que tienes una **fábrica de pasteles**:
 
 ## 📑 Índice
 
-1. [Programación funcional](#51-qué-es-la-programación-funcional)
-2. [Lambda](#52-lambda)
-3. [Interfaces funcionales](#53-interfaces-funcionales)
-4. [Predicate](#54-predicate)
-5. [Function](#55-function)
-6. [Consumer](#56-consumer)
-7. [Supplier](#57-supplier)
-8. [Streams](#58-streams)
-9. [Optional](#59-optional)
+1. [Programación funcional](#51-¿qué-es-la-programación-funcional)
+2. [Lambda](#52-⚡-lambda)
+3. [Interfaces funcionales](#53-📋-interfaces-funcionales)
+4. [Predicate: ¿Sí o No?](#54-✅-predicate-¿sí-o-no)
+5. [Function: Convierte una cosa en otra](#55-🔄-function-convierte-una-cosa-en-otra)
+6. [Consumer: Consume y no devuelve](#56-📤-consumer-consume-y-no-devuelve)
+7. [Supplier: Proveedor de datos](#57-📥-supplier-proveedor-de-datos)
+8. [Streams: Tubería de datos](#58-💧-streams-tubería-de-datos)
+9. [Optional: Valor que puede no existir](#59-📦-optional-valor-que-puede-no-existir)
 10. [Map en profundidad](#510-map-en-más-profundidad)
 11. [Errores y buenas prácticas](#511-errores-y-buenas-prácticas)
 12. [Conclusiones](#512-conclusiones)
+13. [Navegación](#🔗-navegación-de-la-serie)
 
 ---
 
@@ -198,344 +202,202 @@ Integer resultado = duplicar.apply(5); // 10
 **Analogía:**
 Imagina un **camión de basura**:
 - Llega el camión.
-- Recoges tu bolsa de basura.
-- El camión se la lleva.
+- Recibe tu basura.
+- Se la lleva.
 - No devuelve nada.
 
 ```
-Basura → [Consumer: llevar al basurero] → [Acción completada, sin retorno]
+Datos → [Consumer] → Se consume (sin retorno)
 ```
 
 **Ejemplo de uso:**
 ```java
 Consumer<String> imprimir = mensaje -> System.out.println(mensaje);
-imprimir.accept("Hola mundo"); // Imprime el mensaje, no devuelve nada
+imprimir.accept("Hola mundo"); // imprime sin devolver
 ```
 
 **Casos de uso real:**
-- Registrar logs.
-- Enviar correos.
-- Guardar algo en la base de datos.
-- Notificar al usuario.
+- Imprimir datos en la consola.
+- Guardar datos en una base de datos.
+- Enviar un email.
+- Registrar un evento (logging).
 
 ---
 
-## 5.7 📦 Supplier: "Proveedor de datos"
+## 5.7 📥 Supplier: "Proveedor de datos"
 
-**Concepto literal en programación:** `Supplier<T>` no recibe argumentos y devuelve un valor de tipo `T`.
+**Concepto literal en programación:** `Supplier<T>` es una interfaz funcional que no recibe entrada y devuelve un valor de tipo `T`.
 
-**Explicación sencilla:** Es un "proveedor". Llamas → te entrega algo. Sin pedir nada a cambio.
+**Explicación sencilla:** Es un "proveedor". No pide nada, pero te devuelve algo.
 
 **Analogía:**
-Imagina un **dispensador automático de agua**:
-- No le pides con palabras (no da argumentos).
+Imagina un **dispensador de café**:
+- No le pides ingredientes.
 - Solo presionas un botón.
-- Te entrega agua (devuelve).
+- Te devuelve café.
 
 ```
-[Acción: presionar] → [Supplier: obtener agua] → Agua
+(sin entrada) → [Supplier] → Valor de salida
 ```
 
 **Ejemplo de uso:**
 ```java
-Supplier<Double> precioActual = () -> Math.random() * 100;
-Double precio = precioActual.get(); // Obtiene un precio aleatorio
+Supplier<String> saludo = () -> "¡Hola!";
+String resultado = saludo.get(); // "¡Hola!"
 ```
 
 **Casos de uso real:**
-- Generar IDs únicos.
-- Obtener la hora actual.
-- Leer configuración del sistema.
-- Crear objetos por defecto.
+- Generar números aleatorios.
+- Obtener la fecha/hora actual.
+- Crear nuevas instancias.
+- Valores por defecto.
 
 ---
 
-## 5.8 🚰 Streams: "Tubería de procesamiento"
+## 5.8 💧 Streams: "Tubería de datos"
 
-**Concepto literal en programación:** Un stream es una secuencia de elementos sobre la que aplicas operaciones intermedias (que devuelven otro stream) y operaciones terminales (que dan el resultado final).
+**Concepto literal en programación:** Un stream representa una secuencia de elementos sobre la que se aplican operaciones intermedias y terminales de forma declarativa.
 
-**Explicación sencilla:** Es una "tubería" por donde pasan datos, cada tubería puede filtrar, transformar o contar.
+**Explicación sencilla:** Es una "tubería" por donde pasan los datos, transformándose en cada paso.
 
 **Analogía:**
-Imagina una **cadena de producción de agua embotellada**:
-1. Agua bruta entra. ← **Fuente**
-2. **Filtro 1:** quita sedimentos. ← **Operación intermedia**
-3. **Filtro 2:** quita químicos. ← **Operación intermedia**
-4. **Empacador:** empacan en botellas. ← **Operación terminal**
-5. Botellas listas para vender. ← **Resultado**
+Imagina una **línea de lavado de carros**:
+1. El carro entra sucio.
+2. Pasa por agua (filter).
+3. Pasa por jabón (map).
+4. Pasa por aire (forEach).
+5. Sale limpio.
+
+Cada paso transforma el carro sin que intermedios deban preocuparse del resultado anterior.
 
 ```
-Lista original 
-  → filtrar (mayores a 18)
-  → transformar (agregar descuento)
-  → contar
-  → Resultado
+Datos → [filter] → [map] → [forEach] → Resultado
 ```
 
-**Operaciones intermedias:**
-- `filter()`: solo deja pasar los que cumplen la condición.
-- `map()`: transforma cada elemento.
-- `sorted()`: ordena.
-- `distinct()`: quita duplicados.
-
-**Operaciones terminales:**
-- `collect()`: recopila en una colección.
-- `count()`: cuenta.
-- `findFirst()`: obtiene el primero.
-- `forEach()`: hace algo con cada uno.
-
-**Ejemplo visual:**
+**Ejemplo de uso:**
 ```java
-List<Producto> productos = lista;
-List<Producto> resultado = productos.stream()     // Abre tubería
-    .filter(p -> p.getPrecio() > 100)              // Filtra
-    .map(p -> p.conDescuento())                    // Transforma
-    .sorted(Comparator.comparing(Producto::getNombre))  // Ordena
-    .collect(Collectors.toList());                 // Recopila (terminal)
+List<Integer> numeros = List.of(1, 2, 3, 4, 5);
+numeros.stream()
+       .filter(n -> n > 2)          // Solo mayores a 2
+       .map(n -> n * 2)              // Duplica cada uno
+       .forEach(System.out::println); // Imprime
 ```
 
-**¿Por qué es útil?**
-- Código más limpio y legible.
-- Puedes encadenar operaciones.
-- Menos código boilerplate.
+**Casos de uso real:**
+- Filtrar listas grandes.
+- Transformar datos.
+- Calcular totales o promedios.
+- Buscar elementos específicos.
 
 ---
 
-## 5.9 🎁 Optional: "Quizás hay algo, quizás no"
+## 5.9 📦 Optional: "Valor que puede no existir"
 
-**Concepto literal en programación:** `Optional<T>` es un contenedor que encapsula un valor que puede existir o no, evitando trabajar directamente con `null`.
+**Concepto literal en programación:** `Optional<T>` es un contenedor que encapsula un valor que puede estar presente o ausente, evitando trabajar con `null` directamente.
 
-**Explicación sencilla:** Es una "caja de sorpresa" que puede estar vacía o tener algo adentro. Evitas el miedo a abrirla y encontrar `null`.
+**Explicación sencilla:** Es una caja que **puede estar vacía o llenar**. No es directamente `null`.
 
 **Analogía:**
-Imagina que **esperas un paquete por correo**:
-- Puede llegar (tiene valor).
-- Puede no llegar (está vacío).
-
-En lugar de asumir que llegó y abrir nada, pregunta primero: "¿llegó?"
+Imagina una **caja de regalo**:
+- Puede estar llena (tiene valor).
+- Puede estar vacía (no tiene valor).
+- Siempre sabes que existe la caja (no es null).
 
 ```
-¿Hay un usuario con ese ID?
-  → Sí: aquí está
-  → No: está vacío
-
-Sin Optional: 
-  Usuario usuario = buscar(id);  // ¿Qué pasa si es null? 💥
-
-Con Optional:
-  Optional<Usuario> usuario = buscar(id);
-  if (usuario.isPresent()) {
-    // Usa usuario.get()
-  }
+Valor    → Optional.of(valor)
+null     → Optional.empty()
+incierto → Optional.ofNullable(valor)
 ```
 
-**Métodos útiles:**
-- `isPresent()`: ¿hay algo?
-- `get()`: dame lo que hay (cuidado si está vacío).
-- `orElse(valor)`: dame lo que hay, o esto por defecto.
-- `ifPresent(acción)`: si hay algo, haz esto con ello.
-
-**Ejemplo:**
+**Ejemplo de uso:**
 ```java
-Optional<Producto> producto = buscarPorId(5);
-producto.ifPresent(p -> System.out.println(p.getNombre()));
-// Si existe, imprime. Si no, no hace nada.
+Optional<String> nombre = Optional.of("María");
+System.out.println(nombre.orElse("Desconocido")); // María
+
+Optional<String> vacio = Optional.empty();
+System.out.println(vacio.orElse("Desconocido")); // Desconocido
 ```
 
-**¿Por qué es útil?**
-- Evita `NullPointerException`.
-- Obliga a pensar en qué pasa si "no hay".
-- El código es más seguro y legible.
+**Casos de uso real:**
+- Búsquedas en base de datos que pueden no encontrar nada.
+- Parámetros opcionales.
+- Datos que vienen de APIs externas.
+- Evitar NullPointerException.
 
 ---
 
-## 5.10 🗂️ Map en Más Profundidad
+## 5.10 Map en más profundidad
 
-**Concepto literal en programación:** `Map` es una estructura que almacena pares clave-valor. Cada clave es única y se usa para acceder rápidamente a su valor asociado.
+**Concepto literal en programación:** `Map` es una estructura de datos que organiza información en pares clave-valor y ofrece múltiples métodos para consultar, recorrer, eliminar y limpiar contenido.
 
-**Explicación sencilla:** Es como un **diccionario telefónico** o un **archivo clasificado**.
+### Métodos importantes
 
-**Analogía:**
-Imagina una **biblioteca**:
-- **Clave:** el título del libro (único).
-- **Valor:** el contenido del libro.
-- Accedes por título → encuentras el libro.
-
-```
-Map (Diccionario):
-"manzana" → 5 (cantidad)
-"plátano" → 3
-"naranja" → 8
-```
-
-### Métodos Importantes de Map
-
-#### Insertar y Acceder
-- `put(clave, valor)`: agregar un par clave-valor.
-- `get(clave)`: obtener el valor de una clave.
-- `getOrDefault(clave, default)`: obtener o devolver un valor por defecto.
-
-#### Verificar
-- `containsKey(clave)`: ¿existe esta clave?
-- `containsValue(valor)`: ¿existe este valor?
-
-#### Modificar
-- `remove(clave)`: eliminar un par.
-- `replace(clave, nuevoValor)`: reemplazar un valor.
-- `putIfAbsent(clave, valor)`: agregar solo si la clave no existe.
-- `computeIfAbsent(clave, función)`: si no existe, crea el valor usando una función.
-
-#### Recorrer
-- `keySet()`: obtener todas las claves.
-- `values()`: obtener todos los valores.
-- `entrySet()`: obtener pares clave-valor.
-- `forEach(acción)`: hacer algo con cada par.
-
-#### Consultar
-- `size()`: cantidad de pares.
-- `isEmpty()`: ¿está vacío?
-
-#### Limpiar
-- `clear()`: eliminar todo.
-
-**Ejemplo de uso real:**
-```java
-Map<String, Integer> carrito = new HashMap<>();
-
-// Insertar
-carrito.put("Manzana", 5);
-carrito.put("Plátano", 3);
-
-// Acceder
-Integer cantidad = carrito.get("Manzana"); // 5
-
-// Verificar
-if (carrito.containsKey("Naranja")) {
-    System.out.println("Tenemos naranjas");
-} else {
-    System.out.println("No tenemos");
-}
-
-// Modificar
-carrito.replace("Plátano", 5);
-
-// Recorrer
-carrito.forEach((fruta, cant) -> System.out.println(fruta + ": " + cant));
-
-// Limpiar
-carrito.clear();
-```
-
-**¿Por qué es útil?**
-- Acceso rápido por clave.
-- Perfecto para asociaciones lógicas.
-- Usado en cachés, configuraciones y muchas más aplicaciones.
+- `put`: agrega o reemplaza una entrada.
+- `get`: obtiene el valor por clave.
+- `getOrDefault`: obtiene con valor alternativo.
+- `containsKey`: pregunta si existe la clave.
+- `containsValue`: pregunta si existe el valor.
+- `remove`: elimina una entrada.
+- `keySet`: obtiene todas las claves.
+- `values`: obtiene todos los valores.
+- `entrySet`: obtiene todos los pares clave-valor.
+- `size`: cuenta las entradas.
+- `isEmpty`: pregunta si está vacío.
+- `clear`: elimina todo.
+- `putIfAbsent`: agrega solo si no existe.
+- `replace`: reemplaza solo si existe.
+- `computeIfAbsent`: calcula valor si falta la clave.
+- `forEach`: itera sobre pares clave-valor.
 
 ---
 
-## 5.11 🚨 Errores y Buenas Prácticas
+## 5.11 Errores y buenas prácticas
 
-**Concepto literal en programación:** Un error (excepción) es un evento anómalo que interrumpe el flujo normal. Las buenas prácticas garantizan que se maneje de forma estructurada, con mensajes claros y limpieza cuando sea necesario.
+**Concepto literal en programación:** Los errores controlados deben manejarse con estructura, mensajes claros y bloques de limpieza cuando aplique.
 
-**Explicación sencilla:** Si algo falla, el programa debe reaccionar de forma **ordenada y predecible**, no quedarse congelado.
+**Explicación sencilla:** Si algo falla, el programa debe reaccionar de forma ordenada.
 
-**Analogía:**
-Imagina que **conducir un auto**:
-- **Sin manejo de errores:** el motor se apaga → auto se queda en la carretera → caos.
-- **Con manejo de errores:** el motor se apaga → activas plan de emergencia → enciendes las luces → llamas grúa → cosas en orden.
+**Caso de uso real:**
+- División entre cero.
+- Archivos inexistentes.
+- Conversiones inválidas.
+- Acceso a índices fuera de rango.
 
-### Tipos de Errores Comunes
+### Buenas prácticas
 
-| Error | Analogía | Ejemplo | Manejo |
-|---|---|---|---|
-| **División entre cero** | Dividir 1 pastel entre 0 personas (sin sentido) | `10 / 0` | Validar antes |
-| **Archivo no existe** | Buscar un libro en la biblioteca, no está | `leer_archivo("inexistente.txt")` | Capturar y notificar |
-| **Conversión inválida** | Intentar envasar jugo en una botella de vidrio frágil | `Integer.parseInt("abc")` | Validar entrada |
-| **Base de datos caída** | Ir al banco y encontrarlo cerrado | Consulta a BD desconectada | Reintentar o fallar graceful |
-| **Null Pointer** | Abrir una caja vacía esperando un regalo | `objeto.metodo()` si `objeto` es null | Usar Optional o validar |
-
-### Buenas Prácticas
-
-1. **Validar entrada:** verifica que los datos sean correctos antes de usarlos.
-   ```java
-   if (precio < 0) {
-       throw new IllegalArgumentException("Precio no puede ser negativo");
-   }
-   ```
-
-2. **Capturar específicamente:** no atrapes todas las excepciones genéricamente.
-   ```java
-   try {
-       int resultado = 10 / numero;
-   } catch (ArithmeticException e) {
-       System.out.println("No puedes dividir entre cero");
-   }
-   ```
-
-3. **Limpiar recursos:** si abres un archivo, ciérralo (incluso si falla).
-   ```java
-   try (BufferedReader br = new BufferedReader(new FileReader("archivo.txt"))) {
-       // Usar archivo
-   } catch (IOException e) {
-       System.out.println("Error al leer archivo");
-   }
-   // El archivo se cierra automáticamente
-   ```
-
-4. **Mensajes claros:** explica qué salió mal.
-   ```java
-   throw new ProductoNoEncontradoException(
-       "El producto con ID " + id + " no existe en la base de datos"
-   );
-   ```
-
-5. **No ocultes errores:** no hagas nada silenciosamente cuando falla algo.
-   ```java
-   // ❌ Malo
-   try {
-       operacion();
-   } catch (Exception e) {
-       // Nada
-   }
-
-   // ✅ Bueno
-   try {
-       operacion();
-   } catch (IOException e) {
-       logger.error("Error al procesar archivo", e);
-       throw new ProcessingException("No se pudo procesar", e);
-   }
-   ```
+1. **Captura específica:** Atrapa el tipo de error exacto, no genérico.
+2. **Mensajes claros:** Explica qué pasó y por qué.
+3. **Finally para limpieza:** Cierra recursos (archivos, conexiones) aunque falle.
+4. **No silencies errores:** Logging o re-lanzamiento es mejor que ignorar.
+5. **Usa Optional:** Para ausencia de valor en lugar de null.
 
 ---
 
-## 5.12 ✅ Conclusiones
+## 5.12 Conclusiones
 
-**La programación funcional y POO no son enemigas; se complementan perfectamente.**
+**La programación funcional complementa muy bien a la POO en Java.** 
 
-| Cuando usar... | Razón |
-|---|---|
-| **POO (Objetos)** | Para estructurar datos complejos (Usuario, Producto, Pedido) |
-| **Programación funcional** | Para transformar y procesar colecciones (filtrar, mapear, reducir) |
-| **Maps** | Para asociaciones clave-valor rápidas y lógicas |
-| **Streams** | Para operaciones en cadena sobre colecciones |
-| **Optional** | Para evitar `null` y ser explícito con "quizás" |
-| **Lambda** | Para funciones pequeñas y únicas que usas una sola vez |
-| **Manejo de errores** | Para que el programa reaccione de forma ordenada ante lo inesperado |
+Con lambdas, streams y Optional, tu código será:
+- ✅ Más legible.
+- ✅ Más conciso.
+- ✅ Menos propenso a errores.
+- ✅ Más fácil de mantener.
 
-### Idea Final
-
-En Java moderno, combines:
-- **POO:** estructuras.
-- **Programación funcional:** transformaciones.
-- **Errores controlados:** resiliencia.
-
-Esto te permite escribir código que es:
-- ✅ Claro y mantenible.
-- ✅ Seguro ante fallos.
-- ✅ Reutilizable.
-- ✅ Escalable.
+La clave es saber **cuándo usar cada paradigma**: POO para modelar entidades complejas, funcional para transformaciones de datos.
 
 ---
 
-**👉 Próximo documento:** [Ejemplos prácticos de programación funcional, errores y Map con código real](./06-ejemplos-java-funcional-errores-maps.md)
+## 🔗 Navegación de la serie
+
+| Archivo | Contenido |
+|---------|----------|
+| [01-conceptos-spring-boot.md](./01-conceptos-spring-boot.md) | 📚 Conceptos de Spring Boot y microservicios |
+| [02-ejemplos-spring-boot.md](./02-ejemplos-spring-boot.md) | ��� Ejemplos prácticos de Spring Boot |
+| [03-conceptos-java-poo-ciclos-colecciones.md](./03-conceptos-java-poo-ciclos-colecciones.md) | 🧠 Conceptos de Java: POO, ciclos y colecciones |
+| [04-ejemplos-java-poo-ciclos-colecciones.md](./04-ejemplos-java-poo-ciclos-colecciones.md) | 💻 Ejemplos de Java: POO, ciclos y colecciones |
+| **05-conceptos-java-funcional-errores-maps.md** | 🎯 Conceptos de Java: programación funcional y Map |
+| [06-ejemplos-java-funcional-errores-maps.md](./06-ejemplos-java-funcional-errores-maps.md) | 💻 Ejemplos de Java: programación funcional y Map |
+
+---
+
+**👉 Próximo documento:** [Ejemplos prácticos de programación funcional con código real](./06-ejemplos-java-funcional-errores-maps.md)
