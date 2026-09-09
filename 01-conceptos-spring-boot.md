@@ -15,182 +15,211 @@ En internet pasa lo mismo:
 - El **servidor** es la cocina.
 - El **servicio web** es el mesero: recibe pedidos (peticiones) y devuelve respuestas.
 
-**Programar un servicio web** significa escribir las instrucciones para que esa "cocina digital" sepa qué hacer cuando alguien le pide algo.
+Programar un servicio web significa escribir las instrucciones para que esa "cocina digital" sepa qué hacer cuando alguien le pide algo.
+
+**Idea clave:** el cliente pide, el servidor procesa y el servicio responde.
 
 ---
 
 ## 1. ☕ ¿Qué es Java y qué es Spring Boot?
 
 ### Java
-**Concepto literal en programación:** Java es un *lenguaje de programación orientado a objetos, compilado a bytecode que se ejecuta sobre la Máquina Virtual de Java (JVM)*.
+**Concepto literal en programación:** Java es un lenguaje de programación orientado a objetos, compilado a bytecode que se ejecuta sobre la Máquina Virtual de Java (JVM).
 
-**Explicación sencilla:** Java es un idioma que usamos para hablarle a la computadora. Así como el español sirve para que dos personas se entiendan, Java sirve para que un programador y una máquina se entiendan.
+**Explicación sencilla:** Java es un idioma que usamos para hablarle a la computadora. Así como el español sirve para que dos personas se entiendan, Java sirve para que un programador y una máquina se comuniquen con reglas claras.
+
+**Idea importante:** Java no solo es un lenguaje; también tiene una plataforma de ejecución muy usada en empresas.
 
 ### Spring Boot
-**Concepto literal en programación:** Spring Boot es un *framework de Java basado en Spring que permite crear aplicaciones autónomas y listas para producción con configuración mínima, usando el principio de "convención sobre configuración"*.
+**Concepto literal en programación:** Spring Boot es un framework de Java basado en Spring que permite crear aplicaciones autónomas y listas para producción con configuración mínima, usando convención sobre configuración y auto-configuración.
 
-**Explicación sencilla:** Imagina que quieres construir una casa. Podrías cortar cada tabla, hacer los clavos y fabricar los ladrillos tú mismo… o podrías comprar una **casa prefabricada** que ya viene con casi todo listo, y solo la armas.
-👉 **Spring Boot es la casa prefabricada** para hacer aplicaciones web en Java.
+**Explicación sencilla:** Imagina que quieres construir una casa. Podrías fabricar cada ladrillo y cada puerta desde cero, o podrías usar una base ya preparada que te ahorra muchísimo trabajo. Spring Boot hace eso en Java: te da una base lista para crear aplicaciones más rápido.
+
+👉 **Spring Boot es una base preparada para construir aplicaciones web en Java.**
+
+**¿Qué aporta realmente?**
+- Menos configuración manual.
+- Arranque más rápido del proyecto.
+- Integración sencilla con web, seguridad, base de datos y pruebas.
+- Convenciones que evitan repetir trabajo.
 
 ---
 
 ## 2. 🧩 ¿Qué es un Microservicio?
 
-**Concepto literal en programación:** Un microservicio es un *estilo arquitectónico donde una aplicación se estructura como un conjunto de servicios pequeños, independientes, desplegables por separado, cada uno responsable de una única capacidad de negocio y comunicándose vía protocolos ligeros (usualmente HTTP/REST)*.
+**Concepto literal en programación:** Un microservicio es un estilo arquitectónico donde una aplicación se estructura como un conjunto de servicios pequeños, independientes, desplegables por separado y enfocados en una responsabilidad de negocio concreta.
 
-**Explicación sencilla:**
-Piensa en un **centro comercial**:
-- Hay una tienda de **ropa**.
-- Hay una tienda de **comida**.
-- Hay un **cine**.
+**Explicación sencilla:** Piensa en un **centro comercial**:
+- Hay una tienda de ropa.
+- Hay una tienda de comida.
+- Hay un cine.
 
-Cada tienda funciona **por su cuenta**, tiene sus propios empleados y su propia caja. Si el cine cierra, la tienda de ropa sigue funcionando.
+Cada tienda funciona por su cuenta, tiene su propio personal y sus propias reglas. Si el cine cierra, la tienda de ropa sigue funcionando.
 
-👉 Un **microservicio** es como una de esas tiendas: hace **una sola cosa muy bien** y no depende de las otras para vivir.
+👉 Un microservicio es como una de esas tiendas: hace una sola cosa muy bien y puede vivir sin que todo lo demás dependa de él.
 
 ### Comparación:
 | Aplicación tradicional (monolito) | Microservicios |
 |---|---|
-| Una tienda gigante que vende todo | Muchas tiendas pequeñas especializadas |
-| Si falla algo, se cae todo | Si falla uno, los demás siguen |
-| Difícil de cambiar | Fácil de actualizar por partes |
+| Una sola aplicación grande | Muchas aplicaciones pequeñas |
+| Todo se despliega junto | Cada servicio se despliega por separado |
+| Si falla una parte, puede caer todo | Si falla uno, los demás pueden seguir |
+| Más simple de iniciar | Más compleja de operar |
+
+**Importante:** microservicios no significa “más fácil siempre”; significa “más flexible, pero también más complejo de gestionar”.
 
 ---
 
 ## 3. 📮 ¿Qué es HTTP y los "códigos" que se lanzan?
 
-**Concepto literal en programación:** HTTP (HyperText Transfer Protocol) es el *protocolo de comunicación cliente-servidor sobre el cual se intercambian mensajes en la web, usando métodos (GET, POST, PUT, DELETE) y códigos de estado numéricos que indican el resultado de la petición*.
+**Concepto literal en programación:** HTTP (HyperText Transfer Protocol) es el protocolo de comunicación cliente-servidor sobre el cual se intercambian mensajes en la web, usando métodos como GET, POST, PUT, PATCH y DELETE.
 
-**Explicación sencilla:** HTTP es el **idioma del correo postal en internet**. Cuando pides algo, envías una carta (**petición**) y recibes otra (**respuesta**). Esa respuesta trae un **número** que dice cómo salió todo:
+**Explicación sencilla:** HTTP es el lenguaje de intercambio de mensajes en internet. Cuando pides algo, envías una petición, y cuando el servidor responde, te devuelve un mensaje con información y un código que indica qué pasó.
 
+### Ciclo básico request/response
+```text
+Cliente -> Petición HTTP -> Servidor
+Cliente <- Respuesta HTTP <- Servidor
+```
+
+### Métodos HTTP más comunes
+- `GET`: consultar información.
+- `POST`: crear algo nuevo.
+- `PUT`: reemplazar o actualizar completamente.
+- `PATCH`: actualizar parcialmente.
+- `DELETE`: eliminar algo.
+
+### Códigos HTTP comunes
 | Código | Significado sencillo | Analogía |
 |---|---|---|
-| **200 OK** | Todo salió bien | "Aquí tienes tu pedido, gracias" |
-| **201 Created** | Se creó algo nuevo | "Ya te registré en la lista" |
+| **200 OK** | Todo salió bien | "Aquí tienes tu pedido" |
+| **201 Created** | Se creó algo nuevo | "Ya quedó registrado" |
+| **204 No Content** | Se procesó bien, pero no hay contenido | "Todo bien, no hay nada extra que mostrar" |
 | **400 Bad Request** | Pediste algo mal | "No entiendo tu pedido" |
 | **401 Unauthorized** | No te identificaste | "¿Y tú quién eres?" |
 | **403 Forbidden** | No tienes permiso | "No puedes entrar aquí" |
 | **404 Not Found** | No existe lo que buscas | "Aquí no vive esa persona" |
-| **500 Internal Server Error** | Falló la cocina | "Se quemó la comida, perdón" |
+| **409 Conflict** | Hay un conflicto con el estado actual | "Ya existe algo así" |
+| **422 Unprocessable Entity** | Entendí el pedido, pero no lo puedo procesar | "La información está mal formada" |
+| **500 Internal Server Error** | Falló la aplicación | "Se quemó la cocina" |
+| **503 Service Unavailable** | El servicio no está disponible | "La cocina está cerrada" |
 
 ---
 
 ## 4. 🏷️ ¿Qué es una Anotación (Annotation)?
 
-**Concepto literal en programación:** Una anotación es una *forma de metadata que se añade al código fuente para proporcionar información al compilador o al framework en tiempo de ejecución, sin alterar directamente la lógica del programa*.
+**Concepto literal en programación:** Una anotación es una forma de metadata que se añade al código fuente para proporcionar información al compilador o al framework en tiempo de ejecución, sin cambiar directamente la lógica del programa.
 
-**Explicación sencilla:**
-Imagina que estás organizando cajas en una bodega y les pegas **etiquetas de colores**:
-- 🟥 Roja = "Frágil"
-- 🟩 Verde = "Comida"
-- 🟦 Azul = "Ropa"
+**Explicación sencilla:** Imagina que organizas cajas y les pegas etiquetas de colores:
+- Roja = frágil
+- Verde = comida
+- Azul = ropa
 
-Las etiquetas no cambian lo que hay dentro de la caja, pero le dicen a los demás **cómo tratarla**.
+Las etiquetas no cambian el contenido de la caja, pero le dicen a los demás cómo tratarla.
 
-👉 En Spring Boot, una **anotación** es como esas etiquetas. Le dicen a Spring: *"Trata a este pedazo de código de manera especial"*.
+👉 En Spring Boot, una anotación es como una etiqueta que le dice al framework: “trata este código de una manera especial”.
 
-Ejemplos comunes de etiquetas en Spring Boot:
-- `@RestController` → "Esta clase atiende peticiones web" (el mesero).
-- `@Service` → "Esta clase hace el trabajo de negocio" (el cocinero).
-- `@Repository` → "Esta clase habla con la base de datos" (el bodeguero).
-- `@Autowired` → "Aquí conéctame automáticamente esta pieza".
+### Ejemplos comunes de anotaciones en Spring Boot
+- `@RestController` → indica que la clase responde a peticiones web.
+- `@Service` → indica que la clase contiene lógica de negocio.
+- `@Repository` → indica que la clase accede a datos.
+- `@Autowired` → indica que Spring debe inyectar una dependencia automáticamente.
+- `@RequestMapping` / `@GetMapping` / `@PostMapping` → indican rutas HTTP.
 
 ---
 
 ## 5. 🔌 ¿Qué es una Interfaz (Interface)?
 
-**Concepto literal en programación:** Una interfaz es un *contrato que define un conjunto de métodos (comportamientos) que una clase debe implementar, sin especificar cómo se implementan, permitiendo el polimorfismo y el desacoplamiento entre componentes*.
+**Concepto literal en programación:** Una interfaz es un contrato que define un conjunto de métodos que una clase debe implementar, sin especificar cómo se implementan.
 
-**Explicación sencilla:**
-Piensa en un **enchufe de la pared** ⚡.
-- El enchufe no sabe si conectarás un televisor, un cargador o una licuadora.
-- Solo dice: *"Si tienes dos patitas del tamaño correcto, te doy electricidad"*.
+**Explicación sencilla:** Piensa en un enchufe de la pared.
+- No le importa si conectarás un televisor, una licuadora o un cargador.
+- Solo define una forma estándar de conectarse.
 
-👉 Una **interfaz** es como ese enchufe: **es un contrato que dice "así debes conectarte"**, pero no le importa qué aparato seas por dentro.
+👉 Una interfaz es un contrato: dice qué se debe hacer, pero no cómo hacerlo.
 
 **¿Para qué sirve?**
-Para que puedas **cambiar el aparato** sin cambiar el enchufe. Hoy conectas una licuadora, mañana una plancha, y el enchufe sigue igual.
+Para poder cambiar la implementación sin cambiar el código que la usa.
+
+**Ejemplo de idea:** hoy puedes usar un proveedor de pagos, mañana otro, y el resto del sistema sigue funcionando igual.
 
 ---
 
 ## 6. 💉 ¿Qué es la Inyección de Dependencias (DI)?
 
-**Concepto literal en programación:** La Inyección de Dependencias es un *patrón de diseño en el que un objeto recibe las dependencias que necesita desde el exterior (normalmente por un contenedor de IoC - Inversión de Control), en lugar de crearlas él mismo, favoreciendo el desacoplamiento y la testabilidad*.
+**Concepto literal en programación:** La Inyección de Dependencias es un patrón de diseño en el que un objeto recibe las dependencias que necesita desde el exterior, normalmente a través de un contenedor que las crea y administra.
 
-**Explicación sencilla:**
-Imagina que eres un **chef** 👨‍🍳 y necesitas **cuchillos** para cocinar.
+**Explicación sencilla:** Imagina que eres un chef y necesitas cuchillos para cocinar.
 
-**Opción A (sin inyección de dependencias):**
-Tú mismo vas al bosque, cortas el árbol, forjas el metal y fabricas tu cuchillo. 😩 ¡Perderías todo el día!
+**Sin inyección de dependencias:**
+Tú mismo tendrías que salir a fabricar tus cuchillos.
 
-**Opción B (con inyección de dependencias):**
-Llega un **asistente** y te dice: *"Aquí tienes tus cuchillos, ya están listos"*. Tú solo cocinas. 😎
+**Con inyección de dependencias:**
+Un asistente te entrega los cuchillos listos para usar.
 
-👉 En Spring Boot, ese "asistente" se llama **contenedor de Spring**. Él crea los objetos que necesitas y te los **entrega listos** por la puerta.
+👉 En Spring Boot, ese asistente es el contenedor de Spring. Él crea los objetos, los guarda y los entrega donde se necesitan.
+
+**Términos útiles:**
+- **Bean**: objeto administrado por Spring.
+- **ApplicationContext**: el contenedor donde Spring gestiona esos objetos.
 
 **¿Por qué es útil?**
-- No pierdes tiempo creando cosas.
-- Si mañana quieres cuchillos diferentes, solo le pides al asistente y ya.
-- Puedes hacer pruebas más fáciles (le puedes dar "cuchillos de juguete" para probar).
+- Reduce acoplamiento.
+- Facilita pruebas.
+- Centraliza la creación y configuración de objetos.
 
 ---
 
 ## 7. 🚨 Manejo de Excepciones
 
-**Concepto literal en programación:** Una excepción es un *evento anómalo que ocurre durante la ejecución de un programa y que interrumpe el flujo normal de instrucciones. El manejo de excepciones consiste en capturar (try/catch), procesar y responder a esos eventos de forma controlada*.
+**Concepto literal en programación:** Una excepción es un evento anómalo que ocurre durante la ejecución de un programa y que interrumpe el flujo normal de instrucciones. El manejo de excepciones permite responder a ese evento de forma controlada.
 
-**Explicación sencilla:**
-Imagina que estás manejando un carro 🚗 y de repente:
-- Se pincha una llanta.
-- Se acaba la gasolina.
-- Alguien se te atraviesa.
+**Explicación sencilla:** Imagina que vas en carro y de repente se pincha una llanta o se acaba la gasolina. Son imprevistos. Si no tienes plan, te quedas varado. Si tienes un plan, puedes reaccionar mejor.
 
-Son **imprevistos** (excepciones). Si no haces nada, **chocas**. Pero si tienes un plan (*"si se pincha, me orillo y llamo a la grúa"*), sales bien librado.
+👉 Manejar excepciones es tener un plan B cuando algo sale mal.
 
-👉 **Manejar excepciones** es tener un **plan B** para cuando algo sale mal en el programa.
+### Tipos de imprevistos en un servicio web
+- El usuario pide un producto que no existe → responder `404`.
+- El usuario envía datos incompletos → responder `400` o `422`.
+- La base de datos está caída → responder `500` o `503`.
 
-### Tipos de "imprevistos" en un servicio web:
-- El usuario pide un producto que no existe → responder **404**.
-- El usuario envía datos incompletos → responder **400**.
-- La base de datos está caída → responder **500**.
+### Idea importante
+No todas las excepciones significan lo mismo. Algunas son errores de validación, otras son errores del sistema, y otras son problemas de infraestructura.
 
 ---
 
 ## 8. 🎨 Excepciones Personalizadas
 
-**Concepto literal en programación:** Una excepción personalizada es una *clase creada por el desarrollador que extiende de `Exception` o `RuntimeException`, permitiendo representar errores específicos del dominio de negocio con semántica clara*.
+**Concepto literal en programación:** Una excepción personalizada es una clase creada por el desarrollador que extiende de `Exception` o `RuntimeException`, permitiendo representar errores específicos del dominio o del negocio.
 
-**Explicación sencilla:**
-Java trae excepciones "genéricas" como *"algo salió mal"*. Pero eso es muy vago.
+**Explicación sencilla:** Java trae alarmas generales como “algo salió mal”, pero eso es muy vago. Es mejor tener alarmas específicas para saber exactamente qué pasó.
 
-Es como si en un hospital, cada vez que pasa algo, la alarma dijera solo *"¡PROBLEMA!"*. 😰 Sería horrible.
-
-Mejor sería tener alarmas **específicas**:
-- 🚨 "¡Paciente sin oxígeno!"
-- 🚨 "¡Incendio en piso 3!"
-- 🚨 "¡Bebé recién nacido!"
-
-👉 Las **excepciones personalizadas** son esas alarmas específicas que **tú creas** para tu programa:
+👉 Las excepciones personalizadas sirven para representar errores de negocio con nombres claros:
 - `ProductoNoEncontradoException`
 - `SaldoInsuficienteException`
 - `UsuarioBloqueadoException`
 
-Así, cuando algo falla, sabes **exactamente qué pasó** y puedes responder con el código HTTP correcto.
+**¿Por qué son útiles?**
+- Hacen el error más entendible.
+- Permiten responder con un HTTP correcto.
+- Mejoran el mantenimiento del sistema.
 
 ---
 
 ## 9. 🌐 Lanzar Códigos HTTP Personalizados
 
-**Concepto literal en programación:** En Spring Boot, se pueden asociar excepciones con códigos de estado HTTP específicos mediante la anotación `@ResponseStatus` o mediante un `@ControllerAdvice` con `@ExceptionHandler`, controlando así la respuesta que se envía al cliente.
+**Concepto literal en programación:** En Spring Boot, se pueden asociar excepciones con códigos de estado HTTP específicos mediante `@ResponseStatus` o mediante un manejador global como `@ControllerAdvice`.
 
-**Explicación sencilla:**
-Cuando algo falla en tu servicio, **tú decides qué número le devuelves al cliente**.
+**Explicación sencilla:** Cuando algo falla en tu servicio, tú decides qué número le devuelves al cliente.
 
 Ejemplo:
-- Si buscan un producto que no existe → tú lanzas `ProductoNoEncontradoException` y le dices a Spring: *"cuando esto pase, responde con 404"*.
-- Si el saldo no alcanza → lanzas `SaldoInsuficienteException` → *"responde con 402 Payment Required"*.
+- Si buscan un producto que no existe → `404 Not Found`.
+- Si los datos no son válidos → `400 Bad Request` o `422 Unprocessable Entity`.
+- Si no hay stock → `409 Conflict` o un código de negocio definido por el equipo.
 
-👉 Es como decirle al mesero: *"Si el cliente pide algo que no tenemos, dile educadamente que no hay, no te quedes callado"*.
+👉 Es como decirle al mesero: “si no hay el plato, no te calles; responde con educación y claridad”.
+
+**Importante:** en arquitectura real, elegir el código correcto ayuda a que el cliente entienda qué pasó y pueda reaccionar mejor.
 
 ---
 
@@ -198,27 +227,27 @@ Ejemplo:
 
 | Concepto | Analogía simple |
 |---|---|
-| **Spring Boot** | Casa prefabricada para hacer apps web |
-| **Microservicio** | Tienda pequeña que hace una sola cosa bien |
-| **HTTP** | Correo postal de internet |
-| **Códigos HTTP** | Números que dicen cómo salió tu pedido |
-| **Anotación** | Etiqueta de color en una caja |
-| **Interfaz** | Enchufe de la pared (contrato) |
-| **Inyección de dependencias** | Asistente que te entrega herramientas listas |
-| **Excepción** | Imprevisto en la carretera |
-| **Excepción personalizada** | Alarma específica en un hospital |
-| **Lanzar código HTTP** | Decidir qué respuesta le das al cliente |
+| **Spring Boot** | Base preparada para construir apps Java |
+| **Microservicio** | Tienda pequeña especializada |
+| **HTTP** | Sistema de mensajes entre cliente y servidor |
+| **Códigos HTTP** | Números que explican el resultado |
+| **Anotación** | Etiqueta que guía al framework |
+| **Interfaz** | Contrato estándar |
+| **Inyección de dependencias** | Asistente que entrega objetos listos |
+| **Excepción** | Imprevisto que rompe el flujo normal |
+| **Excepción personalizada** | Alarma específica del negocio |
+| **Lanzar código HTTP** | Decidir la respuesta correcta para el cliente |
 
 ---
 
 ## ✅ Con esto ya entiendes:
 - Qué es Spring Boot y para qué sirve.
-- Qué es un microservicio y por qué se usa.
-- Cómo se comunica un cliente con un servicio web (HTTP).
-- Qué son las anotaciones, interfaces e inyección de dependencias.
-- Cómo se manejan los errores de forma elegante.
-- Cómo enviar respuestas de error claras al cliente.
+- Qué es un microservicio y qué lo hace distinto de un monolito.
+- Cómo funciona HTTP en un servicio web.
+- Qué papel cumplen las anotaciones, interfaces e inyección de dependencias.
+- Cómo manejar errores de forma más ordenada.
+- Cómo traducir errores del negocio a respuestas HTTP claras.
 
 ---
 
-**👉 Próximo documento:** ejemplos de código reales, comentados línea por línea, para ver todos estos conceptos "en acción".
+**👉 Próximo documento:** ejemplos de código reales, comentados línea por línea, para ver todos estos conceptos en acción.
