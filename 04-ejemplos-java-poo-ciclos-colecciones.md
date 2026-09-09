@@ -1,16 +1,23 @@
-# 4. Ejemplos de Java: POO, ciclos y colecciones
+# 💻 4. Ejemplos de Java: POO, Ciclos y Colecciones
+### Código práctico línea por línea
 
-## Índice
+> 📘 Este documento es la **continuación práctica** de `03-conceptos-java-poo-ciclos-colecciones.md`.
+> Aquí veremos código real con explicaciones detalladas de cada concepto.
+
+---
+
+## 📑 Índice
 
 1. [Clase y objeto](#41-clase-y-objeto)
 2. [Atributos y métodos](#42-atributos-y-métodos)
 3. [Encapsulamiento](#43-encapsulamiento)
 4. [Ciclos](#44-ciclos)
-5. [List](#45-list)
-6. [Set](#46-set)
-7. [Map](#47-map)
-8. [Try, catch y finally](#48-try-catch-y-finally)
+5. [List: Colección ordenada](#45-list-colección-ordenada)
+6. [Set: Sin repetidos](#46-set-sin-repetidos)
+7. [Map: Pares clave-valor](#47-map-pares-clave-valor)
+8. [Try, catch y finally: Manejo de errores](#48-try-catch-y-finally-manejo-de-errores)
 9. [Resumen y buenas prácticas](#49-resumen-y-buenas-prácticas)
+10. [Navegación](#🔗-navegación-de-la-serie)
 
 ---
 
@@ -146,7 +153,7 @@ public class CiclosEjemplo {
 
 ---
 
-## 4.5 List
+## 4.5 List: Colección ordenada
 
 ### Concepto literal en programación
 
@@ -179,7 +186,7 @@ public class ListEjemplo {
 
 ---
 
-## 4.6 Set
+## 4.6 Set: Sin repetidos
 
 ### Concepto literal en programación
 
@@ -211,7 +218,7 @@ public class SetEjemplo {
 
 ---
 
-## 4.7 Map
+## 4.7 Map: Pares clave-valor
 
 ### Concepto literal en programación
 
@@ -256,7 +263,7 @@ productos.clear();
 
 ---
 
-## 4.8 Try, catch y finally
+## 4.8 Try, catch y finally: Manejo de errores
 
 ### Concepto literal en programación
 
@@ -300,4 +307,19 @@ Las clases modelan el dominio, las colecciones organizan datos y `try/catch/fina
 - Usa `Map` para búsquedas por clave.
 - Usa `try/catch/finally` solo cuando realmente haya riesgo de error.
 
-[Siguiente entrega: conceptos de programación funcional y errores](./05-conceptos-java-funcional-errores-maps.md)
+---
+
+## 🔗 Navegación de la serie
+
+| Archivo | Contenido |
+|---------|----------|
+| [01-conceptos-spring-boot.md](./01-conceptos-spring-boot.md) | 📚 Conceptos de Spring Boot y microservicios |
+| [02-ejemplos-spring-boot.md](./02-ejemplos-spring-boot.md) | 💻 Ejemplos prácticos de Spring Boot |
+| [03-conceptos-java-poo-ciclos-colecciones.md](./03-conceptos-java-poo-ciclos-colecciones.md) | 🧠 Conceptos de Java: POO, ciclos y colecciones |
+| **04-ejemplos-java-poo-ciclos-colecciones.md** | 💻 Ejemplos de Java: POO, ciclos y colecciones |
+| [05-conceptos-java-funcional-errores-maps.md](./05-conceptos-java-funcional-errores-maps.md) | 🎯 Conceptos de Java: programación funcional y Map |
+| [06-ejemplos-java-funcional-errores-maps.md](./06-ejemplos-java-funcional-errores-maps.md) | 💻 Ejemplos de Java: programación funcional y Map |
+
+---
+
+**👉 Próximo documento:** [Conceptos de programación funcional y Map](./05-conceptos-java-funcional-errores-maps.md)
