@@ -2,7 +2,7 @@
 ### Todos los conceptos "en acción", explicados línea por línea (con el concepto literal de programación en cada ejemplo)
 
 > 📘 Este documento es la **continuación** de `01-conceptos-spring-boot.md`.
-> Aquí veremos, con **código real y comentado**, cada uno de los conceptos que aprendiste, y en cada sección se incluye primero el **concepto literal en programación** antes de la explicación sencilla y el ejemplo.
+> Aquí veremos, con **código real y comentado**, cada uno de los conceptos que aprendiste, y en cada sección se incluye primero el **concepto literal en programación** antes de la explicación sencilla.
 
 ---
 
@@ -23,7 +23,7 @@ Nuestro "mesero digital" atenderá estas peticiones:
 ## 📂 Estructura del proyecto (cómo se organizan los archivos)
 
 ```
-tienda-microservicio/
+tiendra-microservicio/
 │
 ├── pom.xml                          ← Lista de "ingredientes" (dependencias)
 │
@@ -54,9 +54,9 @@ tienda-microservicio/
 
 ## 1️⃣ El "botón de encendido": `TiendaApplication.java`
 
-**Concepto literal en programación:** La clase anotada con `@SpringBootApplication` es el *punto de entrada de la aplicación (entry point); combina `@Configuration`, `@EnableAutoConfiguration` y `@ComponentScan`, iniciando el contenedor de Inversión de Control (IoC) de Spring y el servidor embebido*.
+**Concepto literal en programación:** La clase anotada con `@SpringBootApplication` es el punto de entrada de la aplicación (entry point); combina `@Configuration`, `@EnableAutoConfiguration` y `@ComponentScan` para iniciar el contenedor de Spring Boot.
 
-**Explicación sencilla:** Es como el **botón de encendido** de un televisor. Sin él, nada prende.
+**Explicación sencilla:** Es como el botón de encendido de un televisor. Sin él, nada prende.
 
 ```java name=TiendaApplication.java
 package com.tienda;
@@ -82,9 +82,9 @@ public class TiendaApplication {
 
 ## 2️⃣ El "molde" del producto: `Producto.java`
 
-**Concepto literal en programación:** Una clase modelo (o entidad/DTO - *Data Transfer Object*) *representa la estructura de un objeto de dominio con atributos (campos) y comportamientos (métodos) asociados, siguiendo el principio de encapsulamiento de la Programación Orientada a Objetos*.
+**Concepto literal en programación:** Una clase modelo representa la estructura de un objeto de dominio con atributos y, si hace falta, métodos; en este caso funciona como un modelo simple de datos.
 
-**Explicación sencilla:** Es como el **molde para hacer galletas** 🍪. El molde define la forma; cada galleta (objeto) tendrá esa forma pero con sabores distintos.
+**Explicación sencilla:** Es como el molde para hacer galletas 🍪. El molde define la forma; cada galleta (objeto) tendrá esa forma pero con sabores distintos.
 
 ```java name=Producto.java
 package com.tienda.model;
@@ -98,7 +98,7 @@ public class Producto {
     private Double precio;     // Precio del producto (ej: 3500.0)
     private Integer stock;     // Cuántos hay disponibles
 
-    // Constructor vacío (necesario para Spring)
+    // Constructor vacío (útil para frameworks y serialización)
     public Producto() {}
 
     // Constructor con todos los datos (para crear productos rápido)
@@ -124,17 +124,17 @@ public class Producto {
 }
 ```
 
-📌 **Analogía:** Piensa en un formulario en blanco 📄 con campos "nombre, precio, stock". Cada producto es un formulario llenado.
+📌 **Analogía:** Piensa en un formulario en blanco 📄 con campos nombre, precio y stock. Cada producto es un formulario llenado.
 
 ---
 
 ## 3️⃣ El "bodeguero": `ProductoRepository.java`
 
-**Concepto literal en programación:** El repositorio es una *capa de abstracción sobre el acceso a datos (patrón Repository), aislando la lógica de negocio de los detalles de persistencia. La anotación `@Repository` registra la clase como un componente (bean) gestionado por el contenedor de Spring*.
+**Concepto literal en programación:** El repositorio es una capa de abstracción sobre el acceso a datos (patrón Repository), aislando la lógica de negocio de los detalles de persistencia.
 
-**Explicación sencilla:** Es el **encargado de la bodega** 📦. Solo él sabe dónde están guardados los productos y cómo sacarlos.
+**Explicación sencilla:** Es el encargado de la bodega 📦. Solo él sabe dónde están guardados los productos y cómo sacarlos.
 
-Para simplificar, guardaremos los productos en **memoria** (una lista), no en base de datos real.
+Para simplificar, guardaremos los productos en **memoria** (una lista/mapa), no en base de datos real.
 
 ```java name=ProductoRepository.java
 package com.tienda.repository;
@@ -162,7 +162,7 @@ public class ProductoRepository {
         return new ArrayList<>(bodega.values());
     }
 
-    // 🔍 Buscar UN producto por ID (puede que no exista → Optional evita el "null")
+    // 🔍 Buscar UN producto por ID (puede que no exista → Optional evita el null)
     public Optional<Producto> buscarPorId(Long id) {
         return Optional.ofNullable(bodega.get(id));
     }
@@ -187,9 +187,9 @@ public class ProductoRepository {
 
 ## 4️⃣ El "contrato" (interfaz): `ProductoService.java`
 
-**Concepto literal en programación:** Una interfaz (`interface`) define un *conjunto de métodos abstractos (sin cuerpo) que actúan como contrato; cualquier clase que la implemente (`implements`) debe proporcionar la lógica concreta de esos métodos. Esto habilita el polimorfismo y el bajo acoplamiento (loose coupling)*.
+**Concepto literal en programación:** Una interfaz define un conjunto de métodos abstractos sin cuerpo que actúan como contrato; cualquier clase que la implemente debe ofrecer esas operaciones.
 
-**Explicación sencilla:** Es el **enchufe de la pared** ⚡. Dice: *"Si quieres ser un servicio de productos, DEBES saber hacer estas cosas"*.
+**Explicación sencilla:** Es el enchufe de la pared ⚡. Dice: si quieres ser un servicio de productos, debes saber hacer estas cosas.
 
 ```java name=ProductoService.java
 package com.tienda.service;
@@ -200,7 +200,7 @@ import java.util.List;
 // 🔌 Esta es la INTERFAZ = el contrato = el enchufe
 public interface ProductoService {
 
-    // Cualquier clase que "se enchufe" aquí DEBE saber hacer estas 4 cosas:
+    // Cualquier clase que "se enchufe" aquí debe saber hacer estas 4 cosas:
     List<Producto> obtenerTodos();
     Producto obtenerPorId(Long id);
     Producto crear(Producto producto);
@@ -209,15 +209,15 @@ public interface ProductoService {
 ```
 
 📌 **¿Por qué usar una interfaz?**
-Porque mañana podrías tener 2 tipos de "cocineros": uno que use base de datos MySQL, otro que use MongoDB. Ambos cumplen el mismo contrato, y el mesero **no necesita saber cuál está usando**.
+Porque mañana podrías tener dos tipos de servicios: uno con base de datos MySQL y otro con MongoDB. Ambos cumplen el mismo contrato, y el controller no necesita saber cuál está usando.
 
 ---
 
 ## 5️⃣ El "cocinero" (implementación): `ProductoServiceImpl.java`
 
-**Concepto literal en programación:** La clase de implementación *provee la lógica concreta de los métodos declarados en la interfaz (`implements ProductoService`), y es gestionada por el contenedor de Spring como un bean mediante `@Service`. Aquí también se aplica la Inyección de Dependencias (Dependency Injection): un patrón de diseño donde el objeto recibe sus dependencias desde afuera en lugar de crearlas él mismo*.
+**Concepto literal en programación:** La clase de implementación provee la lógica concreta de los métodos declarados en la interfaz y suele ser gestionada por el contenedor de Spring.
 
-**Explicación sencilla:** Es el **cocinero de verdad** 👨‍🍳 que sabe cómo preparar los platos. Aquí también veremos **inyección de dependencias** y cómo **lanzar excepciones**.
+**Explicación sencilla:** Es el cocinero de verdad 👨‍🍳 que sabe cómo preparar los platos. Aquí también veremos inyección de dependencias y cómo lanzar excepciones.
 
 ```java name=ProductoServiceImpl.java
 package com.tienda.service;
@@ -225,7 +225,6 @@ package com.tienda.service;
 import com.tienda.model.Producto;
 import com.tienda.repository.ProductoRepository;
 import com.tienda.exception.ProductoNoEncontradoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -237,8 +236,7 @@ public class ProductoServiceImpl implements ProductoService {
     // Le decimos a Spring: "Yo necesito un bodeguero, por favor tráemelo listo"
     private final ProductoRepository repositorio;
 
-    // Constructor: aquí Spring nos INYECTA el bodeguero automáticamente
-    @Autowired
+    // Constructor: aquí Spring nos inyecta el bodeguero automáticamente
     public ProductoServiceImpl(ProductoRepository repositorio) {
         this.repositorio = repositorio; // Ya tenemos al bodeguero disponible ✅
     }
@@ -252,7 +250,7 @@ public class ProductoServiceImpl implements ProductoService {
     // 🔍 Traer un producto por ID
     @Override
     public Producto obtenerPorId(Long id) {
-        // Le preguntamos al bodeguero. Si NO existe, lanzamos (throw) la ALARMA personalizada 🚨
+        // Le preguntamos al bodeguero. Si no existe, lanzamos la alarma personalizada 🚨
         return repositorio.buscarPorId(id)
             .orElseThrow(() -> new ProductoNoEncontradoException(
                 "No se encontró el producto con ID: " + id
@@ -284,7 +282,7 @@ public class ProductoServiceImpl implements ProductoService {
 
 ### 🚨 `ProductoNoEncontradoException.java`
 
-**Concepto literal en programación:** Una excepción personalizada (custom exception) *extiende `RuntimeException` (excepción no verificada / unchecked) y puede anotarse con `@ResponseStatus` para que Spring devuelva automáticamente el código de estado HTTP indicado cuando sea lanzada (`throw`) sin ser capturada (`catch`)*.
+**Concepto literal en programación:** Una excepción personalizada extiende `RuntimeException` y puede anotarse con `@ResponseStatus` para que Spring devuelva un código HTTP específico.
 
 ```java name=ProductoNoEncontradoException.java
 package com.tienda.exception;
@@ -292,7 +290,7 @@ package com.tienda.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-// 🏷️ ETIQUETA MÁGICA (anotación): "Cuando lancen esta alarma, responde con 404 NOT FOUND"
+// 🏷️ ETIQUETA: "Cuando lancen esta alarma, responde con 404 NOT FOUND"
 @ResponseStatus(HttpStatus.NOT_FOUND) // 404
 public class ProductoNoEncontradoException extends RuntimeException {
 
@@ -305,7 +303,7 @@ public class ProductoNoEncontradoException extends RuntimeException {
 
 ### 🚨 `SaldoInsuficienteException.java`
 
-**Concepto literal en programación:** Esta es otra excepción personalizada que *hereda de `RuntimeException` y utiliza `@ResponseStatus(HttpStatus.PAYMENT_REQUIRED)` para mapear un error de negocio (saldo insuficiente) a un código HTTP semánticamente correcto (402)*.
+**Concepto literal en programación:** Esta es otra excepción personalizada que hereda de `RuntimeException` y utiliza `@ResponseStatus` para mapear un error de negocio a una respuesta HTTP.
 
 ```java name=SaldoInsuficienteException.java
 package com.tienda.exception;
@@ -327,9 +325,9 @@ public class SaldoInsuficienteException extends RuntimeException {
 
 ## 7️⃣ El "911 central": `ManejadorGlobalDeErrores.java`
 
-**Concepto literal en programación:** Un `@ControllerAdvice` (o `@RestControllerAdvice`) con métodos anotados `@ExceptionHandler` *centraliza el manejo de excepciones a nivel global (cross-cutting concern) para todos los controladores, permitiendo transformar excepciones en respuestas HTTP estructuradas (ResponseEntity) de manera desacoplada de la lógica de negocio*.
+**Concepto literal en programación:** Un `@ControllerAdvice` con métodos anotados `@ExceptionHandler` centraliza el manejo de excepciones a nivel global.
 
-**Explicación sencilla:** Es un **centro de emergencias 911** 📞 que responde a TODAS las alarmas y decide qué mensaje enviar al cliente.
+**Explicación sencilla:** Es un centro de emergencias 911 📞 que responde a todas las alarmas y decide qué mensaje enviar al cliente.
 
 ```java name=ManejadorGlobalDeErrores.java
 package com.tienda.exception;
@@ -375,7 +373,7 @@ public class ManejadorGlobalDeErrores {
         return new ResponseEntity<>(respuesta, HttpStatus.PAYMENT_REQUIRED);
     }
 
-    // 📞 Respuesta genérica: si pasa CUALQUIER OTRO error inesperado
+    // 📞 Respuesta genérica: si pasa cualquier otro error inesperado
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> manejarErrorGeneral(Exception ex) {
         Map<String, Object> respuesta = new HashMap<>();
@@ -393,18 +391,16 @@ public class ManejadorGlobalDeErrores {
 
 ## 8️⃣ El "mesero": `ProductoController.java`
 
-**Concepto literal en programación:** Un controlador REST anotado con `@RestController` (equivalente a `@Controller` + `@ResponseBody`) *expone endpoints HTTP mediante anotaciones de mapeo (`@GetMapping`, `@PostMapping`, `@DeleteMapping`), recibe peticiones, delega en la capa de servicio y devuelve respuestas serializadas típicamente en formato JSON*.
+**Concepto literal en programación:** Un controlador REST anotado con `@RestController` expone endpoints HTTP mediante anotaciones de mapeo (`@GetMapping`, `@PostMapping`, `@DeleteMapping`) y devuelve datos al cliente.
 
-**Explicación sencilla:** Es el **mesero** 🧑‍💼. Recibe pedidos del cliente, se los pasa al cocinero, y trae la respuesta.
+**Explicación sencilla:** Es el mesero 🧑‍💼. Recibe pedidos del cliente, se los pasa al cocinero y trae la respuesta.
 
 ```java name=ProductoController.java
 package com.tienda.controller;
 
 import com.tienda.model.Producto;
 import com.tienda.service.ProductoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -417,18 +413,17 @@ public class ProductoController {
     // 💉 Inyección de dependencias: le pedimos a Spring el "cocinero"
     private final ProductoService servicio;
 
-    @Autowired
     public ProductoController(ProductoService servicio) {
         this.servicio = servicio;
     }
 
-    // 📋 GET /productos → devuelve TODOS los productos (200 OK)
+    // 📋 GET /productos → devuelve todos los productos (200 OK)
     @GetMapping
     public List<Producto> obtenerTodos() {
         return servicio.obtenerTodos();
     }
 
-    // 🔍 GET /productos/{id} → devuelve UN producto (200 OK o 404 si no existe)
+    // 🔍 GET /productos/{id} → devuelve un producto (200 OK o 404 si no existe)
     @GetMapping("/{id}")
     public Producto obtenerPorId(@PathVariable Long id) {
         // Si no existe, el servicio lanza ProductoNoEncontradoException
@@ -438,7 +433,7 @@ public class ProductoController {
 
     // ➕ POST /productos → crea un producto (201 CREATED)
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED) // 🏷️ Le decimos: "responde con 201"
+    @ResponseStatus(HttpStatus.CREATED) // 201 = creado
     public Producto crear(@RequestBody Producto producto) {
         // @RequestBody = "toma el JSON que envió el cliente y conviértelo en Producto"
         return servicio.crear(producto);
@@ -446,7 +441,7 @@ public class ProductoController {
 
     // ❌ DELETE /productos/{id} → borra un producto (204 NO CONTENT)
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // 🏷️ 204 = "hecho, sin nada que devolver"
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204 = hecho, sin nada que devolver
     public void eliminar(@PathVariable Long id) {
         servicio.eliminar(id);
     }
@@ -457,16 +452,16 @@ public class ProductoController {
 
 ## 9️⃣ Archivo de "ingredientes": `pom.xml`
 
-**Concepto literal en programación:** El `pom.xml` es el *archivo de configuración de Maven (Project Object Model) que declara dependencias, plugins y metadata del proyecto Java, gestionando la construcción (build) y el empaquetado de la aplicación*.
+**Concepto literal en programación:** El `pom.xml` es el archivo de configuración de Maven que declara dependencias, plugins y metadata del proyecto Java, gestionando la construcción y empaquetado de la aplicación.
 
-**Explicación sencilla:** Es la **lista de mercado** 🛒. Le dice al programa qué "ingredientes" (librerías) necesita descargar.
+**Explicación sencilla:** Es la lista de mercado 🛒. Le dice al programa qué ingredientes (librerías) necesita descargar.
 
 ```xml name=pom.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Heredamos configuración base de Spring Boot (la "receta de la abuela") -->
+    <!-- Heredamos configuración base de Spring Boot -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -478,11 +473,11 @@ public class ProductoController {
     <version>1.0.0</version>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
 
     <dependencies>
-        <!-- 🥇 Ingrediente principal: todo lo necesario para hacer un servicio web -->
+        <!-- Ingrediente principal: todo lo necesario para hacer un servicio web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -505,9 +500,9 @@ public class ProductoController {
 
 ## 🧪 Probando el microservicio
 
-**Concepto literal en programación:** Probar manualmente los endpoints (pruebas de integración manuales) consiste en *enviar peticiones HTTP reales al servidor embebido y verificar que el código de estado y el cuerpo (body) de la respuesta sean los esperados*.
+**Concepto literal en programación:** Probar manualmente los endpoints consiste en enviar peticiones HTTP reales al servidor embebido y verificar que el código de estado, el cuerpo y el comportamiento sean correctos.
 
-Una vez lo prendes con `mvn spring-boot:run`, puedes usar el navegador o herramientas como **Postman** o **curl**.
+Una vez lo enciendes con `mvn spring-boot:run`, puedes usar el navegador o herramientas como **Postman** o **curl**.
 
 ### ✅ Caso 1: Traer todos los productos (200 OK)
 
@@ -523,7 +518,7 @@ GET http://localhost:8080/productos
 ]
 ```
 
-### ✅ Caso 2: Traer un producto que SÍ existe (200 OK)
+### ✅ Caso 2: Traer un producto que sí existe (200 OK)
 
 ```bash
 GET http://localhost:8080/productos/1
@@ -534,7 +529,7 @@ GET http://localhost:8080/productos/1
 { "id": 1, "nombre": "Café", "precio": 3500.0, "stock": 10 }
 ```
 
-### ❌ Caso 3: Traer un producto que NO existe (404 NOT FOUND)
+### ❌ Caso 3: Traer un producto que no existe (404 NOT FOUND)
 
 ```bash
 GET http://localhost:8080/productos/999
@@ -550,7 +545,7 @@ GET http://localhost:8080/productos/999
 }
 ```
 
-🎉 ¡Fíjate cómo la excepción personalizada + el manejador global producen una respuesta **clara y profesional**!
+🎉 ¡Fíjate cómo la excepción personalizada + el manejador global producen una respuesta clara y profesional!
 
 ### ✅ Caso 4: Crear un producto (201 CREATED)
 
@@ -570,9 +565,9 @@ Content-Type: application/json
 
 ## 🔗 Cómo se conecta todo (flujo completo)
 
-**Concepto literal en programación:** Este diagrama representa el *flujo de una petición (request lifecycle) a través de las capas de una arquitectura en capas (layered architecture): Controller → Service → Repository, y cómo una excepción no capturada asciende (propagación de excepciones / exception propagation) hasta ser interceptada por el `@ControllerAdvice`*.
+**Concepto literal en programación:** Este diagrama representa el flujo de una petición a través de las capas de una arquitectura en capas: controller, service, repository y manejo global de errores.
 
-```
+```text
       Cliente (Postman/Navegador)
               │
               │  GET /productos/999
@@ -613,27 +608,27 @@ Content-Type: application/json
 
 | Concepto | Concepto literal en programación | ¿Dónde lo vimos? |
 |---|---|---|
-| **Spring Boot arranque** | Punto de entrada (entry point) que inicia el contenedor IoC | `@SpringBootApplication` en `TiendaApplication` |
+| **Spring Boot arranque** | Punto de entrada que inicia el contenedor de Spring Boot | `@SpringBootApplication` en `TiendaApplication` |
 | **Microservicio REST** | Arquitectura de servicios independientes comunicados por HTTP | Todo el proyecto expone endpoints HTTP |
-| **Anotaciones** | Metadata declarativa procesada por el framework en tiempo de ejecución | `@RestController`, `@Service`, `@Repository`, `@Autowired`, `@GetMapping`, etc. |
+| **Anotaciones** | Metadata declarativa procesada por el framework en tiempo de ejecución | `@RestController`, `@Service`, `@Repository`, `@RequestMapping`, `@GetMapping`, etc. |
 | **Interfaz (contrato)** | Conjunto de métodos abstractos que definen un contrato | `ProductoService` |
 | **Implementación** | Clase concreta que cumple el contrato de una interfaz | `ProductoServiceImpl implements ProductoService` |
-| **Inyección de dependencias** | Patrón de diseño donde el contenedor IoC provee las dependencias | Constructor con `@Autowired` en Service y Controller |
+| **Inyección de dependencias** | Patrón de diseño donde el contenedor provee las dependencias | Constructor en Service y Controller |
 | **Excepciones personalizadas** | Clases que extienden `RuntimeException`/`Exception` para errores de dominio | `ProductoNoEncontradoException`, `SaldoInsuficienteException` |
 | **Códigos HTTP personalizados** | Mapeo de excepciones/respuestas a códigos de estado HTTP específicos | `@ResponseStatus(HttpStatus.NOT_FOUND)`, `@ResponseStatus(HttpStatus.CREATED)`, etc. |
-| **Manejo global de errores** | Interceptación centralizada de excepciones (cross-cutting concern) | `@ControllerAdvice` + `@ExceptionHandler` |
+| **Manejo global de errores** | Interceptación centralizada de excepciones | `@ControllerAdvice` + `@ExceptionHandler` |
 
 ---
 
 ## 🚀 ¿Qué aprendiste?
 
-Con estos ejemplos ya viste **en código real** cómo:
+Con estos ejemplos ya viste en código real cómo:
 
 1. ✅ Se enciende un microservicio con Spring Boot.
 2. ✅ Se organizan las capas (Controller → Service → Repository).
-3. ✅ Se usan anotaciones como "etiquetas" para que Spring entienda cada clase.
+3. ✅ Se usan anotaciones como etiquetas para que Spring entienda cada clase.
 4. ✅ Una interfaz define un contrato, y la implementación cumple ese contrato.
-5. ✅ Spring inyecta automáticamente las dependencias (no las creas tú).
+5. ✅ Spring inyecta automáticamente las dependencias.
 6. ✅ Se crean excepciones personalizadas para representar errores del negocio.
 7. ✅ Se lanzan códigos HTTP personalizados de forma elegante.
 8. ✅ Un manejador global centraliza y estandariza las respuestas de error.
@@ -642,12 +637,12 @@ Con estos ejemplos ya viste **en código real** cómo:
 
 ## 🌟 Siguientes pasos (si quieres seguir aprendiendo)
 
-- Conectar a una **base de datos real** (MySQL, PostgreSQL) con **Spring Data JPA**.
-- Agregar **validaciones** con `@Valid` y `@NotNull`.
-- Proteger el microservicio con **Spring Security** (autenticación y autorización).
-- Documentar la API con **Swagger / OpenAPI**.
-- Comunicar varios microservicios entre sí con **Feign Client** o **RestTemplate**.
-- Desplegar el microservicio en **Docker** y **Kubernetes**.
+- Conectar a una base de datos real (MySQL, PostgreSQL) con Spring Data JPA.
+- Agregar validaciones con `@Valid` y `@NotNull`.
+- Proteger el microservicio con Spring Security (autenticación y autorización).
+- Documentar la API con Swagger / OpenAPI.
+- Comunicar varios microservicios entre sí con Feign Client o RestTemplate.
+- Desplegar el microservicio en Docker y Kubernetes.
 
 ---
 
